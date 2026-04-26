@@ -132,197 +132,416 @@ const UNITS=[
 ];
 
 const ALL_CARDS=[
-  {u:'SWEng', q:'Introduction to Software Engineering', a:`<b>Why Projects Fail & Core Characteristics</b><br>
+
+  // ── SW ENGINEERING ──────────────────────────────────────────────────────────
+
+  {u:'SWEng', q:'Introduction to Software Engineering', a:`<b>Why Projects Fail</b><br>
 <ul>
-  <li>Software projects fail because development of high-quality, defect-free software is inherently hard.</li>
-  <li>Failures often happen because we build a system for the wrong reason, the wrong system entirely, or the system in the wrong way.</li>
-  <li>Software is intrinsically: <strong>complex, intangible, malleable, evolutionary, and difficult to scale</strong>.</li>
-  <li><strong>Software Engineering definition:</strong> The application of a systematic, disciplined, quantifiable approach to development, operation, and maintenance.</li>
+  <li>Failures happen because we build a system for the wrong reason, the wrong system entirely, or the system in the wrong way.</li>
+  <li>Software is intrinsically: <strong>complex, intangible, malleable, evolutionary, and difficult to scale</strong> (Brooks, 1995).</li>
+</ul>
+<b>Definitions</b><br>
+<ul>
+  <li><strong>Bourque (SWEBOK):</strong> The application of a systematic, disciplined, quantifiable approach to the development, operation, and maintenance of software.</li>
+  <li><strong>Lethbridge:</strong> The process of solving customers' problems by the systematic development of large, high-quality software systems within cost, time and other constraints.</li>
 </ul>`},
 
-  {u:'Agile', q:'Agile & Empirical Process Control', a:`<b>Agile Foundations</b><br>
+  // ── AGILE & SCRUM ────────────────────────────────────────────────────────────
+
+  {u:'Agile', q:'Agile & Empirical Process Control', a:`<b>Agile Foundations (Schwaber)</b><br>
 <ul>
-  <li>Systems development is highly complex; treating it like an "assembly line" causes failure. It requires "empirical process control" characterised by <strong>frequent inspection and immediate adjustments</strong>.</li>
-  <li><strong>Agile Manifesto Values:</strong> Individuals and interactions over processes and tools; Working software over documentation; Customer collaboration over contract negotiation; Responding to change over following a plan.</li>
-  <li>In practice: small teams (3–12), short structured meetings, small deliveries of features, continuous testing, and refactoring.</li>
+  <li>Systems development has so much complexity it must be managed by an <strong>empirical process control model</strong>: frequent first-hand inspection + immediate adjustments. Plan-based approaches were seen as laughably inappropriate.</li>
+  <li><strong>Agile Manifesto Values:</strong> Individuals &amp; interactions; Working software; Customer collaboration; Responding to change — over processes/tools, docs, contracts, and following a plan. (Right-hand items still have value.)</li>
+  <li>In practice: small teams (3–12), frequent short meetings, small feature deliveries, continuous testing/analysis/review/refactoring, automation wherever possible, frequent review of objectives.</li>
+</ul>
+<b>Risks of Agile</b><br>
+<ul>
+  <li>Lack of customer engagement; stakeholder conflict; complex contractual arrangements</li>
+  <li>Loss of organisational memory; poor code quality; poor team coordination or cohesion</li>
+</ul>
+<b>What Agile does NOT mean:</b> Doing every agile practice regardless of context, or achieving flexibility through uncontrolled change to objectives or process.<br>
+<b>Methods:</b> XP, Scrum, Lean, FDD, Crystal Clear, Kanban. &nbsp;<b>Practices:</b> TDD, BDD, Planning Poker, Refactoring, Pair Programming, Retrospectives, CI/CD.`},
+
+  {u:'Agile', q:'The Scrum Framework', a:`<b>Overview</b><br>
+<ul>
+  <li>Focuses on team, project and process management. Can wrap around other agile practices for technical concerns. Name derived from rugby (Schwaber &amp; Beedle, 2001).</li>
+  <li><strong>Roles:</strong> Scrum Master, Product Owner, Team Manager, QA Manager, Chief Architect, UX Designer, Developer.</li>
+</ul>
+<b>Work Structure</b><br>
+<ul>
+  <li>Work is organised into <strong>Releases</strong> (each comprising one or more sprints); each <strong>Sprint</strong> lasts 1–3 weeks.</li>
+  <li>Sprint cycle: Planning Meeting → Daily Stand-ups → Sprint Review → Retrospective.</li>
+  <li><strong>Stand-ups (max 10 min):</strong> What did you accomplish? What are you working on? Do you have blockers?</li>
+  <li><strong>Sprint Review:</strong> Demonstrate new software version, summarise progress vs plan.</li>
+  <li><strong>Retrospective:</strong> Review the team's <em>process</em> (not the software).</li>
 </ul>`},
 
-  {u:'Agile', q:'The Scrum Framework', a:`<b>Scrum Roles & Workflow</b><br>
+  {u:'Agile', q:'Scrum Ceremonies', a:`<b>Project Launch Meeting</b><br>
 <ul>
-  <li><strong>Roles:</strong> Scrum Master, Product Owner, Team Manager, Quality Assurance Manager, Chief Architect, UX Designer, Developer.</li>
-  <li><strong>Sprints:</strong> Work is organised into sprints, typically lasting 1 to 3 weeks.</li>
-  <li><strong>Stand-ups:</strong> Frequent meetings (max 10 mins) where each member answers: What did you accomplish? What are you working on? Do you have blockers?</li>
-  <li><strong>Review vs. Retrospective:</strong> Sprint Review demonstrates the new version of the software. The Retrospective focuses on reviewing the team's process.</li>
+  <li>Understand customer long-term objectives; identify MVP; develop initial user stories; populate and triage the backlog with cost estimates and priorities.</li>
+</ul>
+<b>Release Planning Meeting</b><br>
+<ul>
+  <li>Identify high-level features/improvements for a release; create a roadmap of milestones aligned with customer priorities.</li>
+</ul>
+<b>Sprint Planning Meeting</b><br>
+<ul>
+  <li>Decide sprint goal; select tasks from backlog; verify all issues have estimates, priorities, and assignees; ensure total work is within project velocity.</li>
+</ul>
+<b>Velocity &amp; Burn-down Charts</b><br>
+<ul>
+  <li>Velocity = amount of work a team completes per sprint (established empirically).</li>
+  <li>Burn-down chart: plots remaining work against time; ideal vs actual line shows whether the team is on track.</li>
+</ul>
+<b>Brooks' Law (adding more resources)</b><br>
+<ul>
+  <li>Adding people to a late project makes it later — training overhead, unpartitionable tasks, and coordination costs negate gains (Brooks, "The Mythical Man-Month", 1995).</li>
 </ul>`},
 
-  {u:'Agile', q:'Customer Management & IP', a:`<b>Managing Expectations & Ownership</b><br>
+  {u:'Agile', q:'Customer Management & IP', a:`<b>First Customer Meeting</b><br>
 <ul>
-  <li><strong>Customer Responsibilities:</strong> Committing to a time budget (e.g. 40 hours) and providing resources beyond standard lab software.</li>
-  <li><strong>Your Responsibilities:</strong> Managing their expectations, being flexible but realistic, and identifying a "Minimum Viable Product".</li>
-  <li><strong>Intellectual Property (IP):</strong> The University considers students to own all "foreground" IP for coursework. Open source licenses are often the best solution for standard projects.</li>
-  <li>If a company wants ownership of IP for commercial value, there should be an IP transfer and suitable compensation.</li>
+  <li>Undertake release + sprint planning; decide communication channels and GitLab access; identify primary contact (product owner).</li>
+  <li>Clarify overall goals: customer's big picture (the <em>why</em>), realistic goal (the <em>what</em>), MVP (the <em>priorities</em>).</li>
+  <li>Identify all stakeholders (direct contact, their boss, users, data/API providers); determine appropriate IP/licensing model.</li>
+</ul>
+<b>Scope: Pick Two</b><br>
+<ul>
+  <li>Within a fixed time frame, choose: <em>proof-of-concept prototype</em> OR <em>sustainable basis for future development</em> — you can't fully do both.</li>
+  <li>Triangle: Fast, Good, Cheap — pick two.</li>
+</ul>
+<b>Your Responsibilities</b><br>
+<ul>
+  <li>Customer commits to 40 hours. You manage their expectations and workload: be flexible but realistic, be prepared to negotiate and say no.</li>
+  <li>Incorporate previous delays into new schedules; ensure the customer delivers on their commitments.</li>
+</ul>
+<b>Intellectual Property (IP)</b><br>
+<ul>
+  <li>University considers students to own all foreground IP for coursework.</li>
+  <li>Non-commercial academic → open source licence; startup → open source or IP sharing; established company wanting ownership → IP transfer + suitable compensation.</li>
 </ul>`},
 
-  {u:'Req', q:'Requirements Management', a:`<b>User Stories, Actors, and Estimation</b><br>
+  // ── REQUIREMENTS ─────────────────────────────────────────────────────────────
+
+  {u:'Req', q:'Requirements Management', a:`<b>Requirements vs Design</b><br>
 <ul>
-  <li>Requirements specify the system boundary.</li>
-  <li><strong>Actors/Personas:</strong> Essential for justifying features. Includes their goals and frustrations.</li>
-  <li><strong>User Story Format:</strong> "As an [actor] I want to [action] So that [rationale]".</li>
-  <li><strong>INVEST Quality:</strong> Independent, Negotiable, Valuable, Estimable, Small, Testable.</li>
-  <li><strong>MoSCoW Prioritisation:</strong> Must have, Should have, Could have, Would be nice to have.</li>
-  <li><strong>Planning Poker:</strong> An empirical method used by teams to estimate task complexity.</li>
+  <li><strong>Requirements:</strong> What the system does — defined from the outside (system boundary).</li>
+  <li><strong>Design:</strong> How it does it — design docs, implementation, frameworks/libraries. Requirements should not dictate implementation choices.</li>
+</ul>
+<b>Actors/Personas</b><br>
+<ul>
+  <li>Describe categories of users (not too generic, not too specific); include goals and frustrations.</li>
+  <li>Actors justify features and identify stakeholders to negotiate with. A system actor need not be human.</li>
+</ul>
+<b>User Story Format:</b> "As a [actor] / I want to [action] / So that [rationale]"<br>
+<b>Non-functional stories:</b> "As a buyer / I want search to return in &lt;5 seconds / So that I don't waste time."<br>
+<b>Smelly User Stories (anti-patterns)</b><br>
+<ul>
+  <li>Too generic actor ("user"); action describes implementation; rationale is tautological (repeats the action)</li>
+  <li>Too many things in one story — should be split</li>
+  <li>Actor doesn't interact with the system — wrong actor chosen</li>
+</ul>
+<b>Scope:</b> Focus on business logic specific to your application; treat framework features as assumptions.<br>
+<b>INVEST:</b> Independent, Negotiable, Valuable, Estimable, Small, Testable.<br>
+<b>MoSCoW:</b> Must / Should / Could / Would be nice to have.<br>
+<b>Planning Poker:</b> Consensus-based estimation — reveal cards simultaneously, discuss discrepancies, repeat until consensus.`},
+
+  // ── DEV PRACTICES ────────────────────────────────────────────────────────────
+
+  {u:'DevPrac', q:'Change Management & VCS', a:`<b>IS a Change Control Item:</b> Source code, build scripts, default config files, user documentation, requirements specs, VCS tool configurations.<br>
+<b>IS NOT:</b> Compiled binaries, third-party libraries, auto-generated source, log files, client-side IDE config.<br>
+<b>Commits comprise:</b> Unique ID (SHA hash in Git), parent ID(s), changes/additions/removals, metadata (author, timestamp, log message)<br>
+<b>Centralised vs Distributed VCS</b><br>
+<ul>
+  <li><strong>Centralised (e.g. SVN):</strong> single central repository</li>
+  <li><strong>Distributed (e.g. Git):</strong> every developer has a full copy — the modern standard</li>
+</ul>
+<b>Branching Strategies</b><br>
+<ul>
+  <li><strong>Trunk Based:</strong> commit directly to main; small, frequent integrations to avoid divergence</li>
+  <li><strong>Feature Branching:</strong> each feature on its own branch, merged when complete</li>
+  <li><strong>Staging Branches:</strong> branches represent deployment environments (staging, UAT, prod)</li>
+  <li>Named strategies: <strong>Gitflow</strong>, <strong>GitHub Flow</strong>, <strong>GitLab Flow</strong> — most teams customise</li>
+</ul>
+<b>Managing Branch Growth:</b> Delete branches once merged; <strong>commit squashing</strong> — collapse many small commits into one clean commit before merge.<br>
+<b>Naming:</b> <code>feature/webapp/splash</code>, <code>uat</code>, <code>staging</code>`},
+
+  {u:'DevPrac', q:'Software Licensing', a:`<b>What a Licence Covers</b><br>
+<ul>
+  <li>Ownership; usage rights; distribution/reproduction rights (copyright); modification/disassembly rights; warranties and liability.</li>
+  <li>Can apply to: source code, binaries, documentation, outputs.</li>
+</ul>
+<b>Roles:</b> <strong>Producer</strong> — Author, Owner, Distributor, Developer, Contributor. <strong>Consumer</strong> — Customer, Infrastructure Engineer, End-User, Developer.<br>
+<b>Copyright Act 1988:</b> Exclusive right to copy, issue copies to public, and make adaptations. Disassembly/modification is a restricted act under copyright.<br>
+<b>Copyleft:</b> Requires any derivative work to be distributed under the same licence (e.g. GNU GPL) — "share alike". Distinct from copyright.<br>
+<b>Warranties &amp; Liability:</b> Warranty = period in which the provider ensures software functions; Liability = who is responsible for damages.<br>
+<b>Common Licences:</b> Creative Commons (Attribution, ShareAlike, NonCommercial), GNU GPL (V1/V2/V3, LGPL, AGPL), BSD, Eclipse Public Licence.<br>
+<b>Key Considerations:</b> Who are end users? Business model? Dependencies' licences? Risks of use? Enforceability?`},
+
+  {u:'DevPrac', q:'Code Reviews', a:`<b>What Can Be Reviewed</b><br>
+<ul>
+  <li>Application source code, source code documentation, <strong>test code</strong>, <strong>design descriptions</strong>, <strong>requirements specifications</strong>.</li>
+</ul>
+<b>When Reviews Take Place</b><br>
+<ul>
+  <li>Periodically on a portion of the accepted codebase; on a proposed change (MR); before a change to a legacy system.</li>
+</ul>
+<b>Purpose:</b> Detect defects, identify refactoring opportunities, develop shared understanding, share good practice.<br>
+<b>Change Categories (describe in MR):</b> <strong>Corrective</strong> (bug fix), <strong>Adaptive</strong> (responds to external change), <strong>Perfective</strong> (adds new functionality), <strong>Preventative</strong> (improves maintainability).<br>
+<b>MR Best Practices:</b> ~300 lines max, ~30 min review, break large changes into packages, incorporate review time into workload.<br>
+<b>Automation:</b> Block MRs that break tests, violate style, have commented-out code.<br>
+<b>Review Questions:</b> Exceptional situations handled? Clones present? Security patterns followed? Corner cases tested? Performance/efficiency optimisations possible?<br>
+<b>Real-time Reviews:</b> Pair programming; Mob programming.`},
+
+  // ── CI/CD & DEVOPS ────────────────────────────────────────────────────────────
+
+  {u:'CICD', q:'Infrastructure as Code (IaC)', a:`<b>Virtualisation Advantages</b><br>
+<ul>
+  <li>Centralised infrastructure monitoring, better resilience to physical device failure, easier scaling of tenancies.</li>
+</ul>
+<b>Styles of IaC</b><br>
+<ul>
+  <li>Declarative or Imperative; tools: Dockerfiles, Chef, Ansible, Kubernetes, Terraform.</li>
+</ul>
+<b>Good Practices</b><br>
+<ul>
+  <li>Use version control to maintain configurations.</li>
+  <li>Store secrets outside version control (use environment variables, not hardcoded values).</li>
+  <li>Make infrastructures unchangeable (immutable infrastructure).</li>
+  <li>Modularise infrastructure.</li>
 </ul>`},
 
-  {u:'DevPrac', q:'Change Management & VCS', a:`<b>Version Control Systems & Branching</b><br>
+  {u:'CICD', q:'Virtualisation & Containerisation', a:`<b>Core Concept</b><br>
 <ul>
-  <li><strong>Change Control Items:</strong> Source code, build scripts, documentation, requirements. <strong>NOT Items:</strong> Compiled binaries, log files.</li>
-  <li><strong>Commits:</strong> Consist of a unique ID, parent IDs, changes/additions/removals, and metadata (author, timestamp, log message).</li>
-  <li><strong>Commit Logs:</strong> Good practice requires a short/meaningful title, intent description, and a link to the issue/merge request.</li>
-  <li><strong>Branching Strategies:</strong> Trunk Based Development, Feature Branching, and Staging Branches. Helps experiment with features or prepare releases.</li>
-</ul>`},
-
-  {u:'DevPrac', q:'Software Licensing', a:`<b>Copyright, Copyleft, and Liabilities</b><br>
+  <li>Virtualisation creates an <strong>abstraction layer</strong> between levels of a system stack, managed by a <strong>hypervisor</strong> (virtualisation monitor).</li>
+</ul>
+<b>VMs vs Containers</b><br>
 <ul>
-  <li>A software license covers: Ownership, usage rights, distribution rights (copyright), engineering rights (modification), and warranties/liability.</li>
-  <li><strong>Copyright Act 1988:</strong> Grants exclusive right to copy the work, issue copies to the public, and make adaptations.</li>
-  <li><strong>Warranties &amp; Liability:</strong> Warranty asserts the period of time the provider ensures the software functions. Liability asserts who is responsible for damages.</li>
-  <li><strong>Common Licenses:</strong> Creative Commons (Attribution, ShareAlike, NonCommercial), GNU GPL, BSD License.</li>
-</ul>`},
-
-  {u:'DevPrac', q:'Code Reviews', a:`<b>Quality Assurance &amp; Merge Requests</b><br>
+  <li><strong>VMs (hypervisor):</strong> Each VM has its own full Guest OS — heavy, strongly isolated, slower to start.</li>
+  <li><strong>Containers (e.g. Docker):</strong> Share the host OS kernel, isolated by a container engine — lightweight, fast to start, portable.</li>
+</ul>
+<b>Docker</b><br>
 <ul>
-  <li><strong>Purpose:</strong> Detect defects, identify refactoring opportunities, develop a shared understanding, and share good practice.</li>
-  <li><strong>Merge Request Best Practices:</strong> Keep requests small — a single review should be max ~300 lines of code and take ~30 minutes.</li>
-  <li><strong>Automation:</strong> Block MRs that fail standards (e.g. breaking tests, styling violations, commented-out code).</li>
-  <li><strong>Review Questions:</strong> Does this code handle exceptional situations? Are there clones present? Are relevant security patterns followed?</li>
-</ul>`},
-
-  {u:'CICD', q:'Infrastructure as Code (IaC)', a:`<b>Virtualisation &amp; Configuration</b><br>
-<ul>
-  <li><strong>Virtualisation Advantages:</strong> Centralised infrastructure monitoring, better resilience to physical device failure, and easier scaling of tenancies.</li>
-  <li><strong>Styles of IaC:</strong> Can be Declarative or Imperative, utilising tools like Dockerfiles, Chef, Ansible, Kubernetes, and Terraform.</li>
-  <li><strong>Good Practices:</strong> Use version control to maintain configurations, store secrets outside version control, make infrastructures unchangeable, and modularise infrastructure.</li>
-</ul>`},
+  <li><strong>Dockerfile</strong> — defines an image (base image, dependencies, commands, env vars).</li>
+  <li><strong>Multi-stage builds</strong> — stage 1 builds the app (e.g. compile React); stage 2 copies only the output into a minimal runtime image (e.g. nginx). Produces a smaller, cleaner image.</li>
+  <li><strong>docker-compose</strong> — defines and orchestrates multi-service apps (e.g. db + backend + frontend). Declares services, volumes, environment variables, port mappings, and build contexts.</li>
+</ul>
+<b>Key Commands:</b> <code>docker-compose build</code> · <code>docker-compose up -d</code> · <code>docker-compose down</code> · <code>docker-compose ps</code> · <code>docker-compose logs</code><br>
+<b>Common Pattern:</b> nginx as reverse proxy — serves SPA on <code>/</code>, proxies <code>/api/</code> to backend service, serves static files at <code>/django_static/</code>.`},
 
   {u:'CICD', q:'Build, Release & Dependency Management', a:`<b>Versioning, Caching &amp; Deprecation</b><br>
 <ul>
-  <li><strong>Tooling:</strong> Maven, Gradle, NPM, and Pip enable caching of 'oven ready' components and automate compilation.</li>
-  <li><strong>Dependency Resolution:</strong> Known to be NP complete; tools employ strategies like 'Nearest version wins' (e.g. Maven, PIP).</li>
-  <li><strong>Semantic Versioning:</strong> Format is major.minor.incremental[-tag], where major is a breaking change, minor is a feature, and incremental is a patch.</li>
-  <li><strong>Deprecation:</strong> A feature left for compatibility but scheduled for removal; developers must document its scope, schedule, and the replacement mechanism.</li>
+  <li><strong>Tooling:</strong> Maven, Gradle, NPM, Pip — enable caching of compiled components and automate compilation.</li>
+  <li><strong>Dependency Resolution:</strong> Known to be NP complete; tools use strategies like 'Nearest version wins' (Maven, PIP).</li>
+  <li><strong>Semantic Versioning:</strong> major.minor.incremental[-tag] — major = breaking change, minor = new feature, incremental = patch.</li>
+  <li><strong>Deprecation:</strong> Feature left for compatibility but scheduled for removal. Developers must document scope, schedule, and replacement mechanism.</li>
 </ul>`},
 
   {u:'CICD', q:'Continuous Integration (CI)', a:`<b>Avoiding Integration Hell</b><br>
 <ul>
-  <li><strong>Core CI Practices:</strong> Maintain a single source repository, ensure everyone commits to the mainline every day, and make sure every commit builds the mainline on an integration machine.</li>
-  <li><strong>Staging Limitations:</strong> Staging environments may be distributed on too many computing nodes, have too many configurations, or lack access to production-only data sets to perfectly mimic live environments.</li>
-  <li><strong>CI Environments/Tools:</strong> Jenkins, GitLab Runner, and TravisCI automate testing and regression checks to detect broken builds early.</li>
+  <li><strong>Core CI Practices:</strong> Maintain a single source repository; everyone commits to the mainline every day; every commit builds the mainline on an integration machine.</li>
+  <li><strong>Staging Limitations:</strong> Staging environments may be on too many nodes, have too many configs, or lack access to production-only data — can't perfectly mimic live.</li>
+  <li><strong>CI Tools:</strong> Jenkins, GitLab Runner, TravisCI — automate testing and regression checks to detect broken builds early.</li>
 </ul>`},
 
-  {u:'Testing', q:'Behaviour Driven Development (BDD)', a:`<b>Testing Scales &amp; Executable Specs</b><br>
+  {u:'CICD', q:'DevOps', a:`<b>Dev vs Ops Activities</b><br>
 <ul>
-  <li><strong>Scales of Testing:</strong> Includes Unit tests, Integration tests, and Acceptance (or system) tests.</li>
-  <li><strong>Scenario Formatting:</strong> Given (sets up test fixture), When (actions taken during test), and Then (assertions made about system state).</li>
-  <li><strong>Frameworks:</strong> Implementations exist in multiple languages — Cucumber (Ruby/Java), Behave (Python), and JBehave (Java).</li>
-  <li><strong>Good Practices:</strong> Keep scenarios short, comply with the AAA (Arrange/Act/Assert) convention, and write features in user domain language.</li>
+  <li><strong>Development:</strong> Gathering requirements, adding features, quality assurance, defect resolution, release.</li>
+  <li><strong>Operations:</strong> Infrastructure maintenance, deployment, monitoring, user support, defect reporting.</li>
+</ul>
+<b>Release Handoff requires:</b> A package of code/artifacts, an installation and configuration guide, an acceptance test plan, and a rollback plan.<br>
+<b>Small, High-Frequency Deployments — DORA Metrics</b><br>
+<ul>
+  <li>Change lead time; Deployment frequency; Deployment duration; Change failure rate; Mean time to recovery.</li>
+</ul>
+<b>Consistent Environments:</b> Dev → QA → UAT/Pre-prod → Prod. Match OS flavour/release, file system layouts, supporting services, language runtimes, and application dependencies.<br>
+<b>Deployment Secrets:</b> Load from environment variables (<code>os.getenv("DB_PASSWORD")</code>), never hardcode credentials.<br>
+<b>Monitoring:</b> Node heartbeats, resource usage (CPU/memory/network/storage), user behaviour (sessions, feature access), logging streams.<br>
+<b>Planning for Recovery:</b> Reverting recent data transactions, reverting migrations, reverting dependencies, deploying older code versions.`},
+
+  // ── TESTING & QA ─────────────────────────────────────────────────────────────
+
+  {u:'Testing', q:'Behaviour Driven Development (BDD)', a:`<b>Terminology</b><br>
+<ul>
+  <li><strong>Test case:</strong> description of actions to perform on software and the expected outcome.</li>
+  <li><strong>Test:</strong> the execution of a test case, producing a test outcome.</li>
+  <li><strong>Testing:</strong> the practice of creating, maintaining, executing and evaluating test cases.</li>
+</ul>
+<b>Scales of Testing:</b> Unit → Integration → Acceptance (system) tests.<br>
+<b>Gherkin Format (Feature → Scenario → Steps)</b><br>
+<ul>
+  <li><strong>Given</strong> — sets up the test fixture (Arrange)</li>
+  <li><strong>When</strong> — action taken during the test (Act)</li>
+  <li><strong>Then</strong> — assertion about system state (Assert)</li>
+  <li><strong>And</strong> — chains additional Given/When/Then steps</li>
+  <li><strong>Background</strong> — runs before every Scenario in a Feature file (shared setup)</li>
+</ul>
+<b>Scenario Outlines &amp; Examples:</b> Run the same scenario with multiple data inputs using a table of examples — each row is one test run.<br>
+<b>Parameterised Steps:</b> Use <code>{placeholders}</code> in step definitions to make steps reusable across scenarios with different values.<br>
+<b>Frameworks:</b> Behave (Python), Cucumber (Ruby/Java), JBehave (Java).<br>
+<b>Good Practices:</b> Keep scenarios short; use user domain language; focus on business logic not framework behaviour; step definitions should map 1:1 to Gherkin text.`},
+
+  {u:'Testing', q:'Automated Code Analysis', a:`<b>Testing vs Analysis:</b> Testing focuses on what code <em>should do</em>; analysis focuses on <em>how</em> it is implemented and flags "bad smells".<br>
+<b>Code Style</b><br>
+<ul>
+  <li><strong>Naming:</strong> <code>last_commit_file_handle</code> preferred over <code>handel</code> or <code>last_commit</code> — names should be descriptive and follow conventions.</li>
+  <li><strong>Spacing:</strong> consistent spacing around operators (e.g. <code>y = x + z ** 2 / 3</code> not <code>y = x + z ** 2/3</code>).</li>
+  <li><strong>Linting tools</strong> (e.g. Pylint) can be integrated into CI/CD (GitLab CI) to block MRs that violate style.</li>
+</ul>
+<b>Limits of Code Coverage</b><br>
+<ul>
+  <li>100% code coverage does not guarantee correctness — tests can execute every line and still miss logic bugs. Coverage is necessary but not sufficient.</li>
+</ul>
+<b>Bug Detection:</b> Finds unreachable code, incorrect operators, SQL injection vulnerabilities (fix: use PreparedStatement with parameterised queries).<br>
+<b>Mutation Testing</b><br>
+<ul>
+  <li>Artificially introduce small code changes (mutants) to check if your tests catch them.</li>
+  <li><strong>Mutant types:</strong> replace <code>&gt;</code> with <code>&lt;=</code> (infix conditional); replace <code>*</code> with <code>/</code> (infix operator); replace <code>++</code> with <code>--</code> (incrementor); remove <code>this</code>; flip <code>-</code> to <code>+</code> in an expression.</li>
+  <li><strong>Survivors</strong> — mutants that pass all tests — indicate gaps in test coverage. A good test suite kills all mutants.</li>
+  <li>Efficiency = killed mutants / total mutants.</li>
 </ul>`},
 
-  {u:'Testing', q:'Automated Code Analysis', a:`<b>Detecting Smells &amp; Mutants</b><br>
-<ul>
-  <li><strong>Testing vs Analysis:</strong> While testing focuses on what code should do, code analysis focuses on how the application is implemented and flags "bad smells".</li>
-  <li><strong>Bug Detection:</strong> Automated analysis can find unreachable code, implicit usage, incorrect operators, or SQL injection vulnerabilities (often fixed using PreparedStatements).</li>
-  <li><strong>Mutation Testing:</strong> Measures test suite efficiency by injecting defects (mutants) to see if tests fail. Efficiency = killed mutants / failed tests.</li>
-  <li><strong>Survivors:</strong> Mutants that successfully pass all tests and remain undetected are called 'survivors'.</li>
-</ul>`},
+  // ── ARCHITECTURE ─────────────────────────────────────────────────────────────
 
-  {u:'Arch', q:'Software Architecture', a:`<b>Components, Contracts &amp; Patterns</b><br>
+  {u:'Arch', q:'Software Architecture', a:`<b>Component Definitions</b><br>
 <ul>
-  <li><strong>Components vs Objects:</strong> Components are self-contained distinct development efforts, can be implemented in different languages, and communicate over standards (e.g. IDL or network protocols).</li>
-  <li><strong>Design by Contract:</strong> Documents an interface by defining the benefits offered and obligations imposed, explicitly stating Pre-conditions, Post-conditions, and Invariants.</li>
-  <li><strong>Architectural Patterns:</strong> Common models include Model-View-Control (MVC), Client-Server (Thin vs Fat), Peer-to-Peer, Message-Oriented, Pipe and Filter, and Plugin architectures.</li>
-</ul>`},
+  <li><strong>D'Souza (1999):</strong> A coherent package of artifacts that can be independently developed, delivered as a unit, and composed to build something larger.</li>
+  <li><strong>Hopkins (2000):</strong> An object with a well-defined interface and a set of implementations for that interface.</li>
+  <li><strong>Cheesman (2001):</strong> Extends OO principles by strengthening the role of the interface.</li>
+</ul>
+<b>Components vs Objects:</b> Components are self-contained, can be implemented in different languages, and communicate over standards (IDL or network protocols).<br>
+<b>Design by Contract:</b> Documents an interface by explicitly stating <strong>Pre-conditions</strong>, <strong>Post-conditions</strong>, and <strong>Invariants</strong> — defines obligations on both sides of the interface. Can be enforced via annotations (e.g. <code>@Min</code>, <code>@NotNull</code>, <code>@Size</code> in Java Bean Validation).<br>
+<b>Architectural Patterns:</b> MVC, Client-Server (Thin vs Fat client), Peer-to-Peer, Message-Oriented, Pipe and Filter, Plugin.`},
 
-  {u:'CICD', q:'DevOps', a:`<b>Development to Operations</b><br>
-<ul>
-  <li><strong>Release Handoff:</strong> Requires a package of code/artifacts, an installation and configuration guide, an acceptance test plan, and a plan for rollback.</li>
-  <li><strong>Consistent Environments:</strong> Crucial to maintain consistency across Development, QA, UAT, and Prod — covering OS flavours, file systems, and language runtimes.</li>
-  <li><strong>Deployment Secrets:</strong> Database passwords and API keys should be managed via environment variables (e.g. os.getenv) rather than hardcoded in files.</li>
-  <li><strong>Monitoring:</strong> Essential metrics include node heartbeats, resource usage (CPU/memory), user behaviour tracking, and live logging streams.</li>
-</ul>`},
+  // ── PROCESS IMPROVEMENT ───────────────────────────────────────────────────────
 
-  {u:'Process', q:'Software Process Improvement', a:`<b>Frameworks &amp; Agile Principles</b><br>
+  {u:'Process', q:'Software Process Improvement', a:`<b>Frameworks</b><br>
 <ul>
-  <li><strong>Frameworks:</strong> ISO 9001, Six Sigma, Capability Maturity Model (CMMI).</li>
-  <li><strong>Process Loop:</strong> Gather data → Analyse → Identify actions → Prioritise/Implement.</li>
-  <li><strong>Agile Principles:</strong> Improvement is ongoing and requires whole-team participation. Focus on root causes, not symptoms.</li>
-  <li><strong>Best Effort Assumption:</strong> Assume everyone is doing their best; blaming is counterproductive and working harder won't fix a broken process.</li>
+  <li>ISO 9001, Six Sigma, Capability Maturity Model (CMMI).</li>
+</ul>
+<b>Process Loop:</b> Gather data → Analyse → Identify actions → Prioritise &amp; Implement.<br>
+<b>Pre-conditions for Agile Process Improvement</b><br>
+<ul>
+  <li>Measurement is domain specific; improvement is an ongoing activity; requires whole-team participation.</li>
+  <li><strong>Best Effort Assumption:</strong> Assume everyone is doing their best. Blaming is counterproductive. Working harder won't fix a broken process.</li>
+  <li>Focus on root causes, not symptoms.</li>
 </ul>`},
 
   {u:'Process', q:'Scrum Retrospectives', a:`<b>Data Gathering &amp; Root Cause Analysis</b><br>
 <ul>
-  <li><strong>Data Gathering Templates:</strong> Stop/Start/Continue, Mad/Sad/Glad, Loved/Learned/Lacked, Sailboat.</li>
-  <li><strong>Process:</strong> Team populates sticky notes → Group similar items → Vote on priority → Discuss root cause → Select actions.</li>
-  <li><strong>The 5 Whys:</strong> A technique to get to the root cause by repeatedly asking "Why?" until a process failure is identified (e.g. late delivery → late integration).</li>
-  <li><strong>Keeping it Fresh:</strong> Vary the structure, change frequencies, and rotate facilitators to prevent stale meetings.</li>
+  <li><strong>Templates:</strong> Stop/Start/Continue, Mad/Sad/Glad, Loved/Learned/Lacked, Sailboat.</li>
+  <li><strong>Process:</strong> Team populates sticky notes independently → Group similar items → Vote on priority → Discuss root cause → Select and assign actions → Create tickets.</li>
+  <li><strong>The 5 Whys:</strong> Repeatedly ask "Why?" to identify root process failure. Example: late delivery → late integration → integration only at end of sprint → <em>action: integrate throughout sprint</em>.</li>
+  <li><strong>Keeping it Fresh:</strong> Vary the structure, reflect on the retrospective itself, experiment with different frequencies, rotate facilitators.</li>
+  <li>Include previous decisions in future retrospectives to track follow-through.</li>
 </ul>`},
+
+  // ── GROWTH SCIENCE ────────────────────────────────────────────────────────────
 
   {u:'Growth', q:'Intro to Growth Science', a:`<b>Growth Engineering vs. Product Development</b><br>
 <ul>
   <li><strong>Growth Engineering:</strong> Techniques for systematically introducing a new product idea into a large-scale market and driving it to scale.</li>
   <li><strong>Product vs. Growth:</strong> Product development focuses on building what customers want. Growth engineering focuses on creating a market when there are no customers yet.</li>
-  <li><strong>Silicon Valley Success:</strong> Relies on generational, systematised innovation (Semiconductors → PC/Software → Internet/Platforms → Mobile).</li>
+  <li><strong>Silicon Valley Success:</strong> Relies on generational, systematised innovation: Semiconductors → PC/Software → Internet/Platforms → Mobile.</li>
 </ul>`},
 
   {u:'Growth', q:'The Growth Model', a:`<b>The Customer Journey</b><br>
 <ul>
-  <li><strong>The User Journey:</strong> Acquire → Activate → Retain → Refer new users → Monetize.</li>
-  <li><strong>Linear Marketing:</strong> Used initially (SEO, SEM, PR, Events) to attract the first users.</li>
+  <li><strong>User Journey:</strong> Acquire → Activate → Retain → Refer new users → Monetize.</li>
+  <li><strong>Linear Marketing</strong> (SEO, SEM, PR, Events) is used initially to attract first users.</li>
   <li><strong>The Dual Goal:</strong> 1) Optimise the individual user journey. 2) Generate referrals to drive compounding growth loops.</li>
+  <li>Hypothesis testing: systematically generate, test, learn, and prioritise to optimise growth.</li>
 </ul>`},
 
-  {u:'Growth', q:'Retention & Churn', a:`<b>The Foundation of Compounding Growth</b><br>
+  {u:'Growth', q:'Retention & Churn', a:`<b>Foundation of Compounding Growth</b><br>
 <ul>
-  <li><strong>Retention:</strong> The absolute foundation of compounding growth. Without it, growth stalls.</li>
-  <li><strong>Retention is a Trend:</strong> It's not a single number. Saying "50% retention after 12 weeks" is meaningless if it drops to 0% at 14 weeks. You must look at Cohort Graphs.</li>
-  <li><strong>Churn Impact:</strong> Even a 1% constant churn means slowly losing your base. A 33% churn puts a business strictly on a path to failure.</li>
+  <li><strong>Retention is a trend, not a number:</strong> Always look at cohort graphs — a single data point is meaningless without the full curve.</li>
+  <li><strong>3 Retention Curve Trends:</strong></li>
+  <li>Curve <strong>levels off</strong> → Viable business</li>
+  <li>Curve <strong>falls slowly</strong> → Work to do</li>
+  <li>Curve <strong>continues to fall</strong> → Heading for failure</li>
+  <li><strong>Activation</strong> affects the early steep drop; <strong>ongoing retention</strong> determines whether the curve eventually flattens.</li>
+</ul>
+<b>Churn Impact</b><br>
+<ul>
+  <li>Even 1% churn per period causes compounding losses.</li>
+  <li>33–35% churn per period caps active users far below potential (e.g. ~45k vs 120k at zero churn).</li>
 </ul>`},
 
   {u:'Growth', q:'Compounding Growth Loops', a:`<b>Invitational &amp; Content-Driven Loops</b><br>
 <ul>
-  <li><strong>Hypothesis Testing:</strong> Startups systematically generate, test, learn, and prioritise hypotheses to optimise growth.</li>
   <li><strong>Direct Invitational Loop:</strong> Users directly invite others (e.g. WhatsApp users inviting friends; LinkedIn users inviting colleagues).</li>
-  <li><strong>Content-Driven Loop:</strong> Users create content (blogs/profiles) → Google indexes content → New people search and find content → They sign up and create more content (e.g. LinkedIn).</li>
+  <li><strong>Content-Driven Loop:</strong> Users create content → Search engines index it → New people find it → They sign up and create more content (e.g. LinkedIn blogs).</li>
+  <li>Both loops generate referrals that produce compounding growth beyond linear marketing.</li>
 </ul>`},
 
-  {u:'Sus', q:'Frugal Computing', a:`<b>The Climate Challenge &amp; ICT Emissions</b><br>
+  // ── SUSTAINABILITY ────────────────────────────────────────────────────────────
+
+  {u:'Sus', q:'Frugal Computing', a:`<b>The Climate Challenge</b><br>
 <ul>
-  <li><strong>Finite Resources:</strong> Computational resources have historically been treated as infinite, but Koomey/Moore's laws can no longer offset demand.</li>
-  <li><strong>Climate Urgency:</strong> Emissions must be cut to 13 GtCO₂e/y by 2040. Tech alone (CCS, Renewables, Offsets) won't save us; we must reduce energy consumption.</li>
-  <li><strong>ICT Impact:</strong> Computing emissions could reach 14% of the global total by 2040 (up from ~3% in 2020).</li>
+  <li>Emissions must fall from 57 GtCO₂e/y (2022) to 13 GtCO₂e/y by 2040 (~10%/yr); currently rising 1–2%/yr.</li>
+  <li>Computing emissions ~3% of global total in 2020; could reach 14% by 2040. Moore's/Koomey's laws can no longer offset demand.</li>
+</ul>
+<b>Why Tech Alone Won't Save Us</b><br>
+<ul>
+  <li><strong>Renewables/Nuclear:</strong> Deployment too slow — will provide only ~30% of electricity by 2040 (new nuclear takes 20 years to build).</li>
+  <li><strong>Carbon Capture &amp; Storage:</strong> Energy required for capture &gt; energy released; large land requirements; risks of re-release; considered greenwash.</li>
+  <li><strong>Offsetting:</strong> Earth's land can absorb 40–100 GtCO₂e total — covers at most 2 years of global emissions, then capacity is gone.</li>
+</ul>
+<b>The Only Solution: Reduce energy consumption.</b> Treat computational resources as finite and precious; extend device lifetimes dramatically; write efficient software.`},
+
+  {u:'Sus', q:'Lifecycle Emissions & Drivers', a:`<b>Lifecycle Phases (Boavizta Model)</b><br>
+<ul>
+  <li>Raw material extraction → Manufacturing → Transport → Usage → Disposal/End of life → Conception</li>
+</ul>
+<b>Manufacturing vs. Use</b><br>
+<ul>
+  <li><strong>Embodied Carbon:</strong> Emissions from manufacturing (mining, smelting, chip fabs) exceed emissions from operational use.</li>
+  <li><strong>Worst offenders (embodied):</strong> SSDs (3D stacked, many fab layers), large RAM, displays.</li>
+  <li><strong>Phones/tablets:</strong> Production dominates; ICs are the main contributor.</li>
+  <li><strong>Servers:</strong> Use and manufacturing emissions are roughly equal; embodied mostly from SSDs.</li>
+  <li><strong>ICT emissions by component:</strong> User devices highest → Networks → Data centres.</li>
+</ul>
+<b>Emission Growth Drivers</b><br>
+<ul>
+  <li>HD Video/VR/AR; IoT (each device has large network + cloud + manufacturing footprint); AI/LLMs (ChatGPT queries use ~40× more energy than conventional search); Mobile (short replacement cycles).</li>
 </ul>`},
 
-  {u:'Sus', q:'Lifecycle Emissions & Drivers', a:`<b>Manufacturing vs. Use Phase</b><br>
+  {u:'Sus', q:'Greenhouse Gas Protocol', a:`<b>Emission Scopes (GHG Protocol, WRI &amp; WBCSD, 2001)</b><br>
 <ul>
-  <li><strong>Embodied Carbon:</strong> Emissions from manufacturing computing devices (mining, smelting, fabs) significantly exceed emissions from their operational use.</li>
-  <li><strong>Worst Offenders:</strong> SSDs, large RAM, and Displays contribute massively to embodied carbon.</li>
-  <li><strong>Emission Drivers:</strong> Rapid obsolescence/short replacement cycles (especially mobile), High-Def Video/VR, IoT networks, and the extreme energy costs of AI/LLMs.</li>
-</ul>`},
-
-  {u:'Sus', q:'Greenhouse Gas Protocol', a:`<b>Emission Scopes</b><br>
-<ul>
-  <li><strong>Scope 1 (Direct):</strong> Emissions from owned/controlled sources (e.g. company vehicles, owned generators).</li>
+  <li><strong>Scope 1 (Direct):</strong> Emissions from owned/controlled sources (company vehicles, owned generators).</li>
   <li><strong>Scope 2 (Indirect):</strong> Emissions from the generation of purchased electricity, steam, heating, or cooling.</li>
-  <li><strong>Scope 3 (Value Chain):</strong> All other indirect upstream/downstream emissions (e.g. manufacturing of purchased goods, end-of-life disposal, employee commuting).</li>
-  <li><strong>Scope 4 (Avoided):</strong> Emission reductions that occur outside a product's lifecycle but as a result of using the product (e.g. teleconferencing software saving flights).</li>
+  <li><strong>Scope 3 (Value Chain):</strong> All other indirect upstream/downstream emissions — manufacturing of purchased goods, end-of-life disposal, employee commuting.</li>
+  <li><strong>Scope 4 (Avoided):</strong> Emission reductions <em>outside</em> a product's lifecycle as a result of using it (e.g. teleconferencing software saving flights, fuel-saving tyres, low-temp detergents).</li>
 </ul>`},
 
-  {u:'Sus', q:'Server Footprint & Software', a:`<b>Calculating &amp; Reducing Impact</b><br>
+  {u:'Sus', q:'Server Footprint & Software', a:`<b>Calculating Server CO₂</b><br>
 <ul>
-  <li><strong>Total CO₂:</strong> Embodied CO₂ (manufacturing) + CO₂ from use.</li>
-  <li><strong>Server Use CO₂:</strong> Lifetime × Electricity Consumption × Carbon Intensity × Power Usage Effectiveness (PUE).</li>
-  <li><strong>Software Dev Impact:</strong> Must account for CPU/RAM/Networking overhead during local builds, CI/CD pipelines, and deployed cloud runtimes.</li>
-  <li><strong>Goal:</strong> Radically extend device lifetimes to amortize embodied carbon and write more efficient software.</li>
+  <li><strong>Total CO₂ = Embodied CO₂ + CO₂ from use</strong></li>
+  <li><strong>Server CO₂ from use = Lifetime × Electricity Consumption × Carbon Intensity × PUE</strong> (Power Usage Effectiveness — data centre cooling overhead, a number &gt; 1)</li>
+  <li><em>Example (Dell PowerEdge R7515):</em> 1400 kgCO₂e embodied; 415 kWh/yr; UK 182 gCO₂e/kWh; 4-year lifetime; PUE 1.5 → ~1853 kgCO₂e total.</li>
+</ul>
+<b>Goal:</b> Extend device lifetimes to amortize embodied carbon; write more efficient software.`},
+
+  {u:'Sus', q:'Sustainable Software Development', a:`<b>Key Question:</b> What emissions are incurred as a result of deploying code in its current state?<br><br>
+<b>Software Development Emissions (E = Embodied, U = Use)</b><br>
+<ul>
+  <li>Disk: local dev environment, git repo (E)</li>
+  <li>CPU + RAM: local build cycles, IDE, cloud CI/CD (E + U)</li>
+  <li>Networking: local/cloud communication (E + U)</li>
+</ul>
+<b>Software Deployment Emissions</b><br>
+<ul>
+  <li>Disk: application storage, local + cloud (E)</li>
+  <li>CPU + RAM: local + cloud compute (E + U)</li>
+  <li>Networking: local/cloud communication (E + U)</li>
+</ul>
+<b>Key Principles</b><br>
+<ul>
+  <li>Does the application result in emissions avoidance (Scope 4)?</li>
+  <li>Account for CI/CD pipeline energy, not just deployed runtime.</li>
+  <li>Write efficient software; minimise unnecessary computation and data transfer.</li>
 </ul>`},
+
 ];
 
 let activeUnit='all', deck=[...ALL_CARDS], idx=0, flipped=false, touchStartX=0;
