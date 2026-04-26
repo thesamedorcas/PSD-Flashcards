@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systems Programming Flashcards - Complete Course</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f9;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --accent: #6c5ce7;
+            --accent-hover: #a29bfe;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: var(--accent);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .flashcard-container {
+            width: 100%;
+            max-width: 750px;
+            height: 500px;
+            perspective: 1000px;
+            margin-bottom: 20px;
+        }
+
+        .flashcard {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            box-shadow: 0 10px 20px var(--shadow);
+            border-radius: 15px;
+        }
+
+        .flashcard.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px;
+            box-sizing: border-box;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow-y: auto;
+        }
+
+        .card-front {
+            align-items: center;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            font-size: 1.05rem;
+            line-height: 1.5;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        .card-back h2 {
+            margin-top: 0;
+            color: var(--accent);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
+            width: 100%;
+            font-size: 1.5rem;
+        }
+
+        .card-back ul {
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+
+        .card-back li {
+            margin-bottom: 12px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        button {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .progress {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--text-main);
+        }
+
+        cite {
+            font-size: 0.8em;
+            color: #7f8c8d;
+            font-style: normal;
+            background-color: #ecf0f1;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ultimate Course Review Flashcards</h1>
+
+    <div class="flashcard-container" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+            <div class="card-face card-front" id="card-front">
+                </div>
+            <div class="card-face card-back" id="card-back">
+                </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="prevCard(event)">&#8592; Previous</button>
+        <div class="progress" id="progress">1 / 27</div>
+        <button onclick="nextCard(event)">Next &#8594;</button>
+    </div>
+
+    <script>
+        const flashcards = [
+            {
+                topic: "Introduction to Software Engineering",
+                content: `
+                    <h2>Why Projects Fail & Core Characteristics</h2>
+                    <ul>
+                        <li>Software projects fail because development of high quality, defect-free software is inherently hard.</li>
+                        <li>Failures often happen because we build a system for the wrong reason, the wrong system entirely, or the system in the wrong way.</li>
+                        <li>Software is intrinsically: <strong>complex, intangible, malleable, evolutionary, and difficult to scale</strong>.</li>
+                        <li><strong>Software Engineering definition:</strong> The application of a systematic, disciplined, quantifiable approach to development, operation, and maintenance.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Agile & Empirical Process Control",
+                content: `
+                    <h2>Agile Foundations</h2>
+                    <ul>
+                        <li>Systems development is highly complex; treating it like an "assembly line" causes failure. It requires "empirical process control" characterized by <strong>frequent inspection and immediate adjustments</strong>.</li>
+                        <li><strong>Agile Manifesto Values:</strong> Individuals and interactions over processes and tools; Working software over documentation; Customer collaboration over contract negotiation; Responding to change over following a plan.</li>
+                        <li>In practice, this means: Small teams (3-12), short structured meetings, small deliveries of features, continuous testing, and refactoring.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "The Scrum Framework",
+                content: `
+                    <h2>Scrum Roles & Workflow</h2>
+                    <ul>
+                        <li><strong>Roles:</strong> Scrum master, Product owner, Team Manager, Quality assurance manager, Chief architect, UX designer, Developer.</li>
+                        <li><strong>Sprints:</strong> Work is organized into sprints, typically lasting 1 to 3 weeks.</li>
+                        <li><strong>Stand-ups:</strong> Frequent meetings (max 10 mins) where each member answers: What did you accomplish? What are you working on? Do you have blockers?</li>
+                        <li><strong>Review vs. Retrospective:</strong> Sprint Review is to demonstrate the new version of the software. The Retrospective focuses on reviewing the team's process.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Customer Management & IP",
+                content: `
+                    <h2>Managing Expectations & Ownership</h2>
+                    <ul>
+                        <li><strong>Customer Responsibilities:</strong> Committing to a time budget (e.g., 40 hours) and providing resources beyond standard lab software.</li>
+                        <li><strong>Your Responsibilities:</strong> Managing their expectations, being flexible but realistic, and identifying a "Minimum Viable Product".</li>
+                        <li><strong>Intellectual Property (IP):</strong> The University considers students to own all "foreground" IP for coursework. Open source licenses are often the best solution for standard projects.</li>
+                        <li>If a company wants ownership of IP for commercial value, there should be an IP transfer and suitable compensation.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Requirements Management",
+                content: `
+                    <h2>User Stories, Actors, and Estimation</h2>
+                    <ul>
+                        <li>Requirements specify the system boundary.</li>
+                        <li><strong>Actors/Personas:</strong> Essential for justifying features. Includes their goals and frustrations.</li>
+                        <li><strong>User Story Format:</strong> "As an [actor] I want to [action] So that [rationale]".</li>
+                        <li><strong>INVEST Quality:</strong> Independent, Negotiable, Valuable, Estimable, Small, Testable.</li>
+                        <li><strong>MoSCoW Prioritization:</strong> Must have, Should have, Could have, Would be nice to have.</li>
+                        <li><strong>Planning Poker:</strong> An empirical method used by teams to estimate task complexity.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Change Management & VCS",
+                content: `
+                    <h2>Version Control Systems & Branching</h2>
+                    <ul>
+                        <li><strong>Change Control Items:</strong> Source code, build scripts, documentation, requirements. <strong>NOT Items:</strong> Compiled binaries, log files.</li>
+                        <li><strong>Commits:</strong> Consist of a Unique ID, parent IDs, changes/additions/removals, and metadata (author, timestamp, log message).</li>
+                        <li><strong>Commit Logs:</strong> Good practice requires a short/meaningful title, intent description, and a link to the issue/merge request.</li>
+                        <li><strong>Branching Strategies:</strong> Include Trunk Based Development, Feature Branching, and Staging Branches. Helps experiment with features or prepare releases.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Software Licensing",
+                content: `
+                    <h2>Copyright, Copyleft, and Liabilities</h2>
+                    <ul>
+                        <li>A software license covers: Ownership, usage rights, distribution rights (copyright), engineering rights (modification), and warranties/liability.</li>
+                        <li><strong>Copyright Act 1988:</strong> Grants exclusive right to copy the work, issue copies to the public, and make adaptations.</li>
+                        <li><strong>Warranties & Liability:</strong> Warranty asserts the period of time the provider ensures the software functions. Liability asserts who is responsible for damages.</li>
+                        <li><strong>Common Licenses:</strong> Creative Commons (Attribution, ShareAlike, NonCommercial), GNU GPL, BSD License.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Code Reviews",
+                content: `
+                    <h2>Quality Assurance & Merge Requests</h2>
+                    <ul>
+                        <li><strong>Purpose:</strong> Detect defects, identify refactoring opportunities, develop a shared understanding, and share good practice.</li>
+                        <li><strong>Merge Request Best Practices:</strong> Keep requests small! A single review should be max ~300 lines of code and take ~30 minutes.</li>
+                        <li><strong>Automation:</strong> Block MRs that fail standards (e.g., breaking tests, styling violations, commented out code).</li>
+                        <li><strong>Review Questions:</strong> Does this code handle exceptional situations? Are there clones present? Are relevant security patterns followed?</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Infrastructure as Code (IaC)",
+                content: `
+                    <h2>Virtualization & Configuration</h2>
+                    <ul>
+                        <li><strong>Virtualization Advantages:</strong> Centralised infrastructure monitoring, better resilience to physical device failure, and easier scaling of tenancies.</li>
+                        <li><strong>Styles of IaC:</strong> Can be Declarative or Imperative, utilizing tools like Dockerfiles, Chef, Ansible, Kubernetes, and Terraform.</li>
+                        <li><strong>Good Practices:</strong> Use version control to maintain configurations, store secrets outwith version control, make infrastructures unchangeable, and modularise infrastructure.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Build, Release & Dependency Mgmt",
+                content: `
+                    <h2>Versioning, Caching & Deprecation</h2>
+                    <ul>
+                        <li><strong>Tooling:</strong> Maven, Gradle, NPM, and Pip enable caching of 'oven ready' components and automate compilation.</li>
+                        <li><strong>Dependency Resolution:</strong> Known to be NP complete; tools employ strategies like 'Nearest version wins' (e.g. Maven, PIP).</li>
+                        <li><strong>Semantic Versioning:</strong> Format is major.minor.incremental[-tag], where major is a breaking change, minor is a feature, and incremental is a patch.</li>
+                        <li><strong>Deprecation:</strong> A feature left for compatibility but scheduled for removal; developers must document its scope, schedule, and the replacement mechanism.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Continuous Integration (CI)",
+                content: `
+                    <h2>Avoiding Integration Hell</h2>
+                    <ul>
+                        <li><strong>Core CI Practices:</strong> Maintain a single source repository, ensure everyone commits to the mainline every day, and make sure every commit builds the mainline on an integration machine.</li>
+                        <li><strong>Staging Limitations:</strong> Staging environments may be distributed on too many computing nodes, have too many configurations, or lack access to production-only data sets to perfectly mimic live environments.</li>
+                        <li><strong>CI Environments/Tools:</strong> Jenkins, GitLab Runner, and TravisCI automate testing and regression checks to detect broken builds early.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Behaviour Driven Development (BDD)",
+                content: `
+                    <h2>Testing Scales & Executable Specs</h2>
+                    <ul>
+                        <li><strong>Scales of Testing:</strong> Includes Unit tests, Integration tests, and Acceptance (or system) tests.</li>
+                        <li><strong>Scenario Formatting:</strong> Given (sets up test fixture), When (actions taken during test), and Then (assertions made about system state).</li>
+                        <li><strong>Frameworks:</strong> Implementations exist in multiple languages, such as Cucumber (Ruby/Java), Behave (Python), and JBehave (Java).</li>
+                        <li><strong>Good Practices:</strong> Keep scenarios short, comply with the AAA (Arrange/Act/Assert) convention, and write features in user domain language.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Automated Code Analysis",
+                content: `
+                    <h2>Detecting Smells & Mutants</h2>
+                    <ul>
+                        <li><strong>Testing vs Analysis:</strong> While testing focuses on what code should do, code analysis focuses on how the application is implemented and flags "bad smells".</li>
+                        <li><strong>Bug Detection:</strong> Automated analysis can find unreachable code, implicit usage, incorrect operators, or SQL injection vulnerabilities (often fixed using PreparedStatements).</li>
+                        <li><strong>Mutation Testing:</strong> Measures test suite efficiency by injecting defects (mutants) to see if tests fail. Efficiency = killed mutants / failed tests.</li>
+                        <li><strong>Survivors:</strong> Mutants that successfully pass all tests and remain undetected are called 'survivors'.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Software Architecture",
+                content: `
+                    <h2>Components, Contracts & Patterns</h2>
+                    <ul>
+                        <li><strong>Components vs Objects:</strong> Components are self-contained distinct development efforts, can be implemented in different languages, and communicate over standards (e.g., IDL or network protocols).</li>
+                        <li><strong>Design by Contract:</strong> Documents an interface by defining the benefits offered and obligations imposed, explicitly stating Pre-conditions, Post-conditions, and Invariants.</li>
+                        <li><strong>Architectural Patterns:</strong> Common models include Model-View-Control (MVC), Client-Server (Thin vs Fat), Peer-to-Peer, Message-Oriented, Pipe and Filter, and Plugin architectures.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "DevOps",
+                content: `
+                    <h2>Development to Operations</h2>
+                    <ul>
+                        <li><strong>Release Handoff:</strong> Requires a package of code/artifacts, an installation and configuration guide, an acceptance test plan, and a plan for rollback.</li>
+                        <li><strong>Consistent Environments:</strong> It is crucial to maintain consistency across Development, QA, UAT, and Prod, specifically covering OS flavors, file systems, and language runtimes.</li>
+                        <li><strong>Deployment Secrets:</strong> Database passwords and API keys should be managed via environment variables (e.g., os.getenv) rather than hardcoded in files.</li>
+                        <li><strong>Monitoring:</strong> Essential metrics include node heartbeats, resource usage (CPU/memory), user behavior tracking, and live logging streams.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Software Process Improvement",
+                content: `
+                    <h2>Frameworks & Agile Principles</h2>
+                    <ul>
+                        <li><strong>Frameworks:</strong> ISO 9001, Six Sigma, Capability Maturity Model (CMMI) <cite></cite>.</li>
+                        <li><strong>Process Loop:</strong> Gather data -> Analyse -> Identify actions -> Prioritise/Implement <cite></cite>.</li>
+                        <li><strong>Agile Principles:</strong> Improvement is ongoing and requires whole-team participation. Focus on root causes, not symptoms <cite></cite>.</li>
+                        <li><strong>Best Effort Assumption:</strong> Assume everyone is doing their best; blaming is counterproductive and working harder won't fix a broken process <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Scrum Retrospectives",
+                content: `
+                    <h2>Data Gathering & Root Cause Analysis</h2>
+                    <ul>
+                        <li><strong>Data Gathering Templates:</strong> Stop/Start/Continue, Mad/Sad/Glad, Loved/Learned/Lacked, Sailboat <cite></cite>.</li>
+                        <li><strong>Process:</strong> Team populates sticky notes -> Group similar items -> Vote on priority -> Discuss root cause -> Select actions <cite></cite>.</li>
+                        <li><strong>The 5 Whys:</strong> A technique to get to the root cause by repeatedly asking "Why?" until a process failure is identified (e.g., late delivery -> late integration) <cite></cite>.</li>
+                        <li><strong>Keeping it Fresh:</strong> Vary the structure, change frequencies, and rotate facilitators to prevent stale meetings <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Intro to Growth Science",
+                content: `
+                    <h2>Growth Engineering vs. Product Development</h2>
+                    <ul>
+                        <li><strong>Growth Engineering:</strong> Techniques for systematically introducing a new product idea into a large-scale market and driving it to scale <cite></cite>.</li>
+                        <li><strong>Product vs. Growth:</strong> Product development focuses on building what customers want. Growth engineering focuses on creating a market when there are no customers yet <cite></cite>.</li>
+                        <li><strong>Silicon Valley Success:</strong> Relies on generational, systematised innovation (Semiconductors -> PC/Software -> Internet/Platforms -> Mobile) <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "The Growth Model",
+                content: `
+                    <h2>The Customer Journey</h2>
+                    <ul>
+                        <li><strong>The User Journey:</strong> Acquire -> Activate -> Retain -> Refer new users -> Monetize <cite></cite>.</li>
+                        <li><strong>Linear Marketing:</strong> Used initially (SEO, SEM, PR, Events) to attract the first users <cite></cite>.</li>
+                        <li><strong>The Dual Goal:</strong> 1) Optimize the individual user journey. 2) Generate referrals to drive compounding growth loops <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Retention & Churn",
+                content: `
+                    <h2>The Foundation of Compounding Growth</h2>
+                    <ul>
+                        <li><strong>Retention:</strong> The absolute foundation of compounding growth. Without it, growth stalls <cite></cite>.</li>
+                        <li><strong>Retention is a Trend:</strong> It's not a single number. Saying "50% retention after 12 weeks" is meaningless if it drops to 0% at 14 weeks. You must look at Cohort Graphs <cite></cite>.</li>
+                        <li><strong>Churn Impact:</strong> Even a 1% constant churn means slowly losing your base. A 33% churn puts a business strictly on a path to failure <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Compounding Growth Loops",
+                content: `
+                    <h2>Invitational & Content-Driven Loops</h2>
+                    <ul>
+                        <li><strong>Hypothesis Testing:</strong> Startups systematically generate, test, learn, and prioritise hypotheses to optimize growth <cite></cite>.</li>
+                        <li><strong>Direct Invitational Loop:</strong> Users directly invite others (e.g., WhatsApp users inviting friends; LinkedIn users inviting colleagues) <cite></cite>.</li>
+                        <li><strong>Content-Driven Loop:</strong> Users create content (blogs/profiles) -> Google indexes content -> New people search and find content -> They sign up and create more content (e.g., LinkedIn) <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Frugal Computing",
+                content: `
+                    <h2>The Climate Challenge & ICT Emissions</h2>
+                    <ul>
+                        <li><strong>Finite Resources:</strong> Computational resources have historically been treated as infinite, but Koomey/Moore's laws can no longer offset demand <cite></cite>.</li>
+                        <li><strong>Climate Urgency:</strong> Emissions must be cut to 13 GtCO2e/y by 2040. Tech alone (CCS, Renewables, Offsets) won't save us; we must reduce energy consumption <cite></cite>.</li>
+                        <li><strong>ICT Impact:</strong> Computing emissions could reach 14% of the global total by 2040 (up from ~3% in 2020) <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Lifecycle Emissions & Drivers",
+                content: `
+                    <h2>Manufacturing vs. Use Phase</h2>
+                    <ul>
+                        <li><strong>Embodied Carbon:</strong> Emissions from manufacturing computing devices (mining, smelting, fabs) significantly exceed emissions from their operational use <cite></cite>.</li>
+                        <li><strong>Worst Offenders:</strong> SSDs, large RAM, and Displays contribute massively to embodied carbon <cite></cite>.</li>
+                        <li><strong>Emission Drivers:</strong> Rapid obsolescence/short replacement cycles (especially mobile), High-Def Video/VR, IoT networks, and the extreme energy costs of AI/LLMs <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Greenhouse Gas Protocol",
+                content: `
+                    <h2>Emission Scopes</h2>
+                    <ul>
+                        <li><strong>Scope 1 (Direct):</strong> Emissions from owned/controlled sources (e.g., company vehicles, owned generators) <cite></cite>.</li>
+                        <li><strong>Scope 2 (Indirect):</strong> Emissions from the generation of purchased electricity, steam, heating, or cooling <cite></cite>.</li>
+                        <li><strong>Scope 3 (Value Chain):</strong> All other indirect upstream/downstream emissions (e.g., manufacturing of purchased goods, end-of-life disposal, employee commuting) <cite></cite>.</li>
+                        <li><strong>Scope 4 (Avoided):</strong> Emission reductions that occur outside a product's lifecycle but as a result of using the product (e.g., teleconferencing software saving flights) <cite></cite>.</li>
+                    </ul>
+                `
+            },
+            {
+                topic: "Server Footprint & Software",
+                content: `
+                    <h2>Calculating & Reducing Impact</h2>
+                    <ul>
+                        <li><strong>Total CO2:</strong> Embodied CO2 (manufacturing) + CO2 from use <cite></cite>.</li>
+                        <li><strong>Server Use CO2:</strong> Lifetime &times; Electricity Consumption &times; Carbon Intensity &times; Power Usage Effectiveness (PUE) <cite></cite>.</li>
+                        <li><strong>Software Dev Impact:</strong> Must account for CPU/RAM/Networking overhead during local builds, CI/CD pipelines, and deployed cloud runtimes <cite></cite>.</li>
+                        <li><strong>Goal:</strong> Radically extend device lifetimes to amortize embodied carbon and write more efficient software <cite></cite>.</li>
+                    </ul>
+                `
+            }
+        ];
+
+        let currentIndex = 0;
+        const flashcard = document.getElementById('flashcard');
+        const cardFront = document.getElementById('card-front');
+        const cardBack = document.getElementById('card-back');
+        const progress = document.getElementById('progress');
+
+        function loadCard(index) {
+            flashcard.classList.remove('is-flipped');
+            setTimeout(() => {
+                cardFront.innerHTML = flashcards[index].topic;
+                cardBack.innerHTML = flashcards[index].content;
+                progress.innerText = `${index + 1} / ${flashcards.length}`;
+            }, 200); 
+        }
+
+        function flipCard() {
+            flashcard.classList.toggle('is-flipped');
+        }
+
+        function nextCard(event) {
+            event.stopPropagation(); 
+            if (currentIndex < flashcards.length - 1) {
+                currentIndex++;
+                loadCard(currentIndex);
+            }
+        }
+
+        function prevCard(event) {
+            event.stopPropagation();
+            if (currentIndex > 0) {
+                currentIndex--;
+                loadCard(currentIndex);
+            }
+        }
+
+        // Initialize the first card
+        loadCard(currentIndex);
+    </script>
+</body>
+</html>
