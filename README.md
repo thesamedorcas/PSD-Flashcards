@@ -1,26 +1,30 @@
 # PSD Flashcards
 
-An interactive flashcard app for reviewing a Professional Software Development course — built as a single HTML file with no dependencies.
+An interactive flashcard app built for exam studying on a Professional Software Development course. Single HTML file, no dependencies, no build step.
 
 ## Features
 
-- 27 flashcards covering key course topics
+- 28 flashcards built from lecture slide content
 - Click-to-flip animation (front shows topic, back shows detailed notes)
-- Previous / Next navigation
-- Progress indicator
+- Scrollable unit filter strip to study by topic area
+- Previous / Next navigation with arrow keys and swipe gestures
+- Space bar to flip cards
+- Progress bar and card counter
 
 ## Topics Covered
 
 - Introduction to Software Engineering
-- Agile & Empirical Process Control
+- Agile and Empirical Process Control
 - The Scrum Framework
-- Customer Management & IP
+- Scrum Ceremonies
+- Customer Management and IP
 - Requirements Management
-- Change Management & Version Control
+- Change Management and Version Control
 - Software Licensing
 - Code Reviews
 - Infrastructure as Code (IaC)
-- Build, Release & Dependency Management
+- Virtualisation and Containerisation
+- Build, Release and Dependency Management
 - Continuous Integration (CI)
 - Behaviour Driven Development (BDD)
 - Automated Code Analysis
@@ -30,13 +34,14 @@ An interactive flashcard app for reviewing a Professional Software Development c
 - Scrum Retrospectives
 - Intro to Growth Science
 - The Growth Model
-- Retention & Churn
+- Retention and Churn
 - Compounding Growth Loops
 - Frugal Computing
-- Lifecycle Emissions & Drivers
+- Lifecycle Emissions and Drivers
 - Greenhouse Gas Protocol
-- Server Footprint & Software
+- Server Footprint and Software
+- Sustainable Software Development
 
 ## Usage
 
-Open `index.html` in any browser — no build step or server required.
+Open `index.html` in any browser. No build step or server required.
