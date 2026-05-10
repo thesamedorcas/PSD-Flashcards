@@ -60,6 +60,7 @@
       border:1px solid var(--rule);box-shadow:0 4px 18px rgba(26,22,18,0.10);
       overflow:hidden;
     }
+    .card-back .card-body{cursor:default;}
     .card-front{background:#fff;}
     .card-back{background:var(--answer-bg);transform:rotateY(180deg);border-color:var(--answer-rule);}
     .card-header{
@@ -72,7 +73,7 @@
     .card-back .card-type{color:#4a7ac9;}
     .card-unit{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--ink3);background:var(--paper2);padding:3px 8px;border-radius:2px;}
     .card-back .card-unit{background:#cad8ed;color:var(--answer-ink);}
-    .card-body{flex:1;display:flex;align-items:center;justify-content:center;padding:4px 0 12px;overflow-y:auto;min-height:0;}
+    .card-body{flex:1;display:flex;align-items:center;justify-content:center;padding:4px 0 12px;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
     .card-back .card-body{align-items:flex-start;}
     .card-text{font-family:'DM Sans',sans-serif;font-size:clamp(0.85rem,2.2vw,1rem);line-height:1.72;text-align:center;color:var(--ink);word-break:break-word;}
     .card-back .card-text{color:var(--answer-ink);font-size:0.82rem;text-align:left;line-height:1.6;width:100%;}
@@ -546,6 +547,16 @@ const ALL_CARDS=[
 
 let activeUnit='all', deck=[...ALL_CARDS], idx=0, flipped=false, touchStartX=0;
 
+function saveState(){try{localStorage.setItem('psd_unit',activeUnit);localStorage.setItem('psd_idx',String(idx));}catch(e){}}
+function loadState(){
+  try{
+    var u=localStorage.getItem('psd_unit');
+    var i=localStorage.getItem('psd_idx');
+    if(u){activeUnit=u;deck=activeUnit==='all'?ALL_CARDS.slice():ALL_CARDS.filter(function(c){return c.u===activeUnit;});}
+    if(i){var n=parseInt(i,10);if(!isNaN(n)&&n>=0&&n<deck.length)idx=n;}
+  }catch(e){}
+}
+
 function unitLabel(id){return(UNITS.find(u=>u.id===id)||{}).label||id;}
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
@@ -587,6 +598,7 @@ function renderCard(dir){
   }
 
   document.getElementById('theCard').addEventListener('click',toggleFlip);
+  document.querySelector('.card-back .card-body').addEventListener('click',function(e){e.stopPropagation();});
   document.getElementById('flipBtn').addEventListener('click',toggleFlip);
   document.getElementById('prevBtn').addEventListener('click',function(){navigate(-1);});
   document.getElementById('nextBtn').addEventListener('click',function(){navigate(1);});
@@ -607,7 +619,7 @@ function toggleFlip(){
   if(b)b.textContent=flipped?'unflip':'flip';
 }
 
-function navigate(dir){idx=((idx+dir)+deck.length)%deck.length;flipped=false;renderCard(dir);}
+function navigate(dir){idx=((idx+dir)+deck.length)%deck.length;flipped=false;saveState();renderCard(dir);}
 
 function renderUnitStrip(){
   const strip=document.getElementById('unitStrip');
@@ -621,6 +633,7 @@ function renderUnitStrip(){
       idx=0;flipped=false;
       strip.querySelectorAll('.unit-tab').forEach(function(b){b.classList.remove('active');});
       btn.classList.add('active');
+      saveState();
       renderCard(null);
     });
   });
@@ -632,8 +645,11 @@ document.addEventListener('keydown',function(e){
   else if(e.key===' '||e.key==='Enter'){e.preventDefault();toggleFlip();}
 });
 
+loadState();
 renderUnitStrip();
 renderCard(null);
+// scroll active tab into view after strip is rendered
+(function(){var active=document.querySelector('.unit-tab.active');if(active)active.scrollIntoView({block:'nearest',inline:'center'});})();
 </script>
 </body>
 </html>
