@@ -173,8 +173,11 @@ const ALL_CARDS=[
   <li>Work is organised into <strong>Releases</strong> (each comprising one or more sprints); each <strong>Sprint</strong> lasts 1–3 weeks.</li>
   <li>Sprint cycle: Planning Meeting → Daily Stand-ups → Sprint Review → Retrospective.</li>
   <li><strong>Stand-ups (max 10 min):</strong> What did you accomplish? What are you working on? Do you have blockers?</li>
-  <li><strong>Sprint Review:</strong> Demonstrate new software version, summarise progress vs plan.</li>
-  <li><strong>Retrospective:</strong> Review the team's <em>process</em> (not the software).</li>
+  <li><strong>Sprint Review:</strong> <em>Focuses on the Product</em> — demonstrate new features to stakeholders, summarise progress vs plan.</li>
+  <li><strong>Retrospective:</strong> <em>Focuses on the Process</em> — review how the team worked together and identify improvements.</li>
+  <li><strong>Velocity:</strong> Amount of work (Story Points) completed per sprint — established empirically over time.</li>
+  <li><strong>Burn-down Chart:</strong> Plots remaining work against time; reveals scope creep or slow velocity early.</li>
+  <li><strong>Definition of Done (DoD):</strong> A shared agreement on what "complete" means — e.g. coded, peer-reviewed, tested, documented, deployed to staging. Without a DoD, "done" is subjective.</li>
 </ul>`},
 
   {u:'Agile', q:'Scrum Ceremonies', a:`<b>Project Launch Meeting</b><br>
@@ -242,7 +245,15 @@ const ALL_CARDS=[
   <li>Actor doesn't interact with the system — wrong actor chosen</li>
 </ul>
 <b>Scope:</b> Focus on business logic specific to your application; treat framework features as assumptions.<br>
-<b>INVEST:</b> Independent, Negotiable, Valuable, Estimable, Small, Testable.<br>
+<b>INVEST Criteria</b><br>
+<ul>
+  <li><strong>I — Independent:</strong> Self-contained; does not depend on another story to be developed.</li>
+  <li><strong>N — Negotiable:</strong> A co-created invitation to a conversation — not a rigid contract or list of technical specs.</li>
+  <li><strong>V — Valuable:</strong> Provides a clear benefit to a user or stakeholder. Avoid circular rationales (e.g. "search so I can find").</li>
+  <li><strong>E — Estimable:</strong> The team can judge the effort required; if not, split or analyse further.</li>
+  <li><strong>S — Small:</strong> Fits within a single sprint — not an Epic. Epics must be decomposed.</li>
+  <li><strong>T — Testable:</strong> Clear way to verify "done". Avoid subjective terms like "user-friendly" or "fast".</li>
+</ul>
 <b>MoSCoW:</b> Must / Should / Could / Would be nice to have.<br>
 <b>Planning Poker:</b> Consensus-based estimation — reveal cards simultaneously, discuss discrepancies, repeat until consensus.`},
 
@@ -277,6 +288,16 @@ const ALL_CARDS=[
 <b>Warranties &amp; Liability:</b> Warranty = period in which the provider ensures software functions; Liability = who is responsible for damages.<br>
 <b>Common Licences:</b> Creative Commons (Attribution, ShareAlike, NonCommercial), GNU GPL (V1/V2/V3, LGPL, AGPL), BSD, Eclipse Public Licence.<br>
 <b>Key Considerations:</b> Who are end users? Business model? Dependencies' licences? Risks of use? Enforceability?`},
+
+  {u:'DevPrac', q:'SOLID Design Principles', a:`<b>The Five SOLID Principles</b><br>
+<ul>
+  <li><strong>S — Single Responsibility:</strong> A class should have one, and only one, reason to change. Each class owns one concern.</li>
+  <li><strong>O — Open/Closed:</strong> Software entities should be open for extension, but closed for modification. Add behaviour by extending, not by editing existing code.</li>
+  <li><strong>L — Liskov Substitution:</strong> Objects of a superclass should be replaceable with objects of its subclasses without breaking the application. Subclasses must honour the contract of their parent.</li>
+  <li><strong>I — Interface Segregation:</strong> No client should be forced to depend on methods it does not use. Prefer many small, focused interfaces over one large general-purpose interface.</li>
+  <li><strong>D — Dependency Inversion:</strong> Depend on abstractions, not concretions. High-level modules should not depend on low-level modules; both should depend on interfaces.</li>
+</ul>
+<b>Why SOLID matters:</b> Reduces coupling, increases cohesion, makes code easier to test, extend, and maintain without cascading side-effects.`},
 
   {u:'DevPrac', q:'Code Reviews', a:`<b>What Can Be Reviewed</b><br>
 <ul>
@@ -357,7 +378,10 @@ const ALL_CARDS=[
 <b>Consistent Environments:</b> Dev → QA → UAT/Pre-prod → Prod. Match OS flavour/release, file system layouts, supporting services, language runtimes, and application dependencies.<br>
 <b>Deployment Secrets:</b> Load from environment variables (<code>os.getenv("DB_PASSWORD")</code>), never hardcode credentials.<br>
 <b>Monitoring:</b> Node heartbeats, resource usage (CPU/memory/network/storage), user behaviour (sessions, feature access), logging streams.<br>
-<b>Planning for Recovery:</b> Reverting recent data transactions, reverting migrations, reverting dependencies, deploying older code versions.`},
+<b>Planning for Recovery:</b> Reverting recent data transactions, reverting migrations, reverting dependencies, deploying older code versions.<br>
+<b>The Risk Principle:</b> Risk increases exponentially with the size of the change. Release small, frequent changes — they are easier to test, review, and roll back than large infrequent deployments.<br>
+<b>Lead Time for Change:</b> The time from a code commit to that commit being active in production. Minimising lead time improves agility and reduces the cost of bugs reaching users.<br>
+<b>Automated Rollback:</b> The ability to instantly revert to a previous stable state. Must be a practiced, automated "normal" event — not a manual emergency procedure.`},
 
   // ── TESTING & QA ─────────────────────────────────────────────────────────────
 
@@ -378,6 +402,7 @@ const ALL_CARDS=[
 </ul>
 <b>Scenario Outlines &amp; Examples:</b> Run the same scenario with multiple data inputs using a table of examples — each row is one test run.<br>
 <b>Parameterised Steps:</b> Use <code>{placeholders}</code> in step definitions to make steps reusable across scenarios with different values.<br>
+<b>Step Implementation:</b> Code that maps a Gherkin string to an actual test function. Every unique Gherkin line requires its own step function (1:1 mapping). The function contains the Arrange/Act/Assert logic — Gherkin is the specification, step code is the execution.<br>
 <b>Frameworks:</b> Behave (Python), Cucumber (Ruby/Java), JBehave (Java).<br>
 <b>Good Practices:</b> Keep scenarios short; use user domain language; focus on business logic not framework behaviour; step definitions should map 1:1 to Gherkin text.`},
 
@@ -395,10 +420,13 @@ const ALL_CARDS=[
 <b>Bug Detection:</b> Finds unreachable code, incorrect operators, SQL injection vulnerabilities (fix: use PreparedStatement with parameterised queries).<br>
 <b>Mutation Testing</b><br>
 <ul>
-  <li>Artificially introduce small code changes (mutants) to check if your tests catch them.</li>
+  <li><strong>Mutation:</strong> A small, deliberate change in source code (e.g. changing <code>a &gt; b</code> to <code>a &lt; b</code>).</li>
+  <li><strong>Mutant:</strong> The version of the program with that specific change applied.</li>
+  <li><strong>Killed:</strong> A test fails when run against the mutant — the mutant is killed (good; tests caught the injected bug).</li>
+  <li><strong>Survivor:</strong> All tests still pass despite the mutation — the mutant survived (bad; reveals a gap in test coverage).</li>
+  <li><strong>Mutation Score (Effectiveness):</strong> killed mutants / total mutants × 100%. A strong test suite kills all mutants.</li>
+  <li><strong>Efficiency:</strong> Ratio of mutants killed relative to the time/CPU cost of running the tests.</li>
   <li><strong>Mutant types:</strong> replace <code>&gt;</code> with <code>&lt;=</code> (infix conditional); replace <code>*</code> with <code>/</code> (infix operator); replace <code>++</code> with <code>--</code> (incrementor); remove <code>this</code>; flip <code>-</code> to <code>+</code> in an expression.</li>
-  <li><strong>Survivors</strong> — mutants that pass all tests — indicate gaps in test coverage. A good test suite kills all mutants.</li>
-  <li>Efficiency = killed mutants / total mutants.</li>
 </ul>`},
 
   // ── ARCHITECTURE ─────────────────────────────────────────────────────────────
@@ -411,7 +439,23 @@ const ALL_CARDS=[
 </ul>
 <b>Components vs Objects:</b> Components are self-contained, can be implemented in different languages, and communicate over standards (IDL or network protocols).<br>
 <b>Design by Contract:</b> Documents an interface by explicitly stating <strong>Pre-conditions</strong>, <strong>Post-conditions</strong>, and <strong>Invariants</strong> — defines obligations on both sides of the interface. Can be enforced via annotations (e.g. <code>@Min</code>, <code>@NotNull</code>, <code>@Size</code> in Java Bean Validation).<br>
-<b>Architectural Patterns:</b> MVC, Client-Server (Thin vs Fat client), Peer-to-Peer, Message-Oriented, Pipe and Filter, Plugin.`},
+<b>Architectural Patterns</b><br>
+<ul>
+  <li><strong>Client-Server:</strong> Thin client (processing on server) vs Fat client (processing on device). Others: Peer-to-Peer, Pipe and Filter, Plugin.</li>
+</ul>
+<b>MVC (Model-View-Controller)</b><br>
+<ul>
+  <li><strong>Model:</strong> Manages data and business logic (the "store").</li>
+  <li><strong>View:</strong> The representation of data (HTML, UI).</li>
+  <li><strong>Controller:</strong> Manages interactions and transformations between Model and View.</li>
+  <li><strong>Benefit:</strong> Separation of concerns — UI can change without breaking business logic.</li>
+</ul>
+<b>Broker / Message-Oriented Pattern</b><br>
+<ul>
+  <li><strong>Purpose:</strong> Decouples a client from multiple heterogeneous service providers.</li>
+  <li><strong>Mechanism:</strong> A central Broker receives a request, dispatches it to Wrappers/Adapters for each provider, then aggregates results.</li>
+  <li><strong>Use case:</strong> When providers (e.g. Airlines, Hotels) have different APIs and varying response times — enables asynchronous communication so the UI does not freeze while waiting for a slow provider.</li>
+</ul>`},
 
   // ── PROCESS IMPROVEMENT ───────────────────────────────────────────────────────
 
@@ -445,13 +489,34 @@ const ALL_CARDS=[
   <li><strong>Silicon Valley Success:</strong> Relies on generational, systematised innovation: Semiconductors → PC/Software → Internet/Platforms → Mobile.</li>
 </ul>`},
 
-  {u:'Growth', q:'The Growth Model', a:`<b>The Customer Journey</b><br>
+  {u:'Growth', q:'The Growth Model & AARRR Metrics', a:`<b>AARRR — The Customer Journey Framework</b><br>
 <ul>
-  <li><strong>User Journey:</strong> Acquire → Activate → Retain → Refer new users → Monetize.</li>
-  <li><strong>Linear Marketing</strong> (SEO, SEM, PR, Events) is used initially to attract first users.</li>
-  <li><strong>The Dual Goal:</strong> 1) Optimise the individual user journey. 2) Generate referrals to drive compounding growth loops.</li>
-  <li>Hypothesis testing: systematically generate, test, learn, and prioritise to optimise growth.</li>
+  <li><strong>Acquisition:</strong> How users find you (SEO, SEM, PR, Events, viral loops).</li>
+  <li><strong>Activation:</strong> The user's first positive experience — the "aha moment" that makes them want to return.</li>
+  <li><strong>Retention:</strong> Users returning to use the product repeatedly; the foundation of compounding growth.</li>
+  <li><strong>Referral:</strong> Users recommending the product to others — drives viral, compounding growth beyond linear marketing.</li>
+  <li><strong>Revenue:</strong> Monetising the user base (subscriptions, ads, transactions).</li>
+</ul>
+<b>Growth Strategy</b><br>
+<ul>
+  <li><strong>Linear Marketing</strong> (SEO, SEM, PR, Events) attracts first users but does not compound.</li>
+  <li><strong>The Dual Goal:</strong> 1) Optimise each AARRR stage individually. 2) Generate referrals to create compounding growth loops.</li>
+  <li>Hypothesis testing: systematically generate, test, learn, and prioritise to optimise each stage.</li>
 </ul>`},
+
+  {u:'Growth', q:'Lean Startup: MVP & Pivot', a:`<b>Core Lean Startup Concepts</b><br>
+<ul>
+  <li><strong>MVP (Minimum Viable Product):</strong> The version of a new product that allows a team to collect the maximum amount of validated learning about customers with the least effort. Not a prototype — it must be shippable and testable with real users.</li>
+  <li><strong>Validated Learning:</strong> Test a specific hypothesis about user behaviour or market demand. Build → Measure → Learn loop.</li>
+  <li><strong>Pivot:</strong> A structured course correction to test a new fundamental hypothesis about the product, strategy, or growth engine. Triggered when data shows the current hypothesis is wrong.</li>
+</ul>
+<b>Types of Pivot</b><br>
+<ul>
+  <li><strong>Zoom-in:</strong> A single feature becomes the whole product.</li>
+  <li><strong>Customer segment:</strong> Product is right, but for a different customer than originally targeted.</li>
+  <li><strong>Business model:</strong> Revenue model changes (e.g. free → subscription).</li>
+</ul>
+<b>Relationship to Growth:</b> The MVP validates whether there is a market before investing in full product development. AARRR metrics guide which stage to pivot on.`},
 
   {u:'Growth', q:'Retention & Churn', a:`<b>Foundation of Compounding Growth</b><br>
 <ul>
@@ -487,6 +552,12 @@ const ALL_CARDS=[
   <li><strong>Renewables/Nuclear:</strong> Deployment too slow — will provide only ~30% of electricity by 2040 (new nuclear takes 20 years to build).</li>
   <li><strong>Carbon Capture &amp; Storage:</strong> Energy required for capture &gt; energy released; large land requirements; risks of re-release; considered greenwash.</li>
   <li><strong>Offsetting:</strong> Earth's land can absorb 40–100 GtCO₂e total — covers at most 2 years of global emissions, then capacity is gone.</li>
+</ul>
+<b>Software Carbon Footprint — Three Primary Domains</b><br>
+<ul>
+  <li><strong>End User Premises:</strong> Energy consumed by the user's local hardware (laptops, smartphones, tablets) and peripherals while interacting with the application.</li>
+  <li><strong>Network:</strong> Energy to transmit data across the internet — home routers, local Wi-Fi/wired, mobile towers (4G/5G), long-distance fibre/satellite links.</li>
+  <li><strong>Cloud Data Centre:</strong> Electricity used by physical servers, storage systems (databases), and the massive cooling infrastructure (captured by PUE).</li>
 </ul>
 <b>The Only Solution: Reduce energy consumption.</b> Treat computational resources as finite and precious; extend device lifetimes dramatically; write efficient software.`},
 
